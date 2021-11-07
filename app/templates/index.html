@@ -1,0 +1,13 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        hello
+    </head>
+    <body>
+        {%block list%}
+            {% for _data in data %}
+                <li><a href = "/parks/activities/{{ _data['id']}}/state-parks"> {{ _data["name"] }} </a> </li>
+            {% endfor%}
+        {%endblock%}
+    </body>
+</html>

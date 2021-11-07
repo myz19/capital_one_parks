@@ -1,0 +1,45 @@
+{% extends "base.html" %}	
+{% block content %}
+<!-- Header -->
+	<header id="header" class="alt">
+					<h1 id="logo"><a href="index.html">National Parks</a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="index.html">Welcome</a></li>
+							<li class="submenu">
+								<a href="#">Activities</a>
+								<ul style = "height: 300px; overflow-y: scroll">
+									{% for _data in data %}
+                						<li><a href = "/parks/activities/{{ _data['id']}}/state-parks?limit=10&start=0"> {{ _data["name"] }} </a> </li>
+            						{% endfor %}
+								</ul>
+							</li>
+						</ul>
+					</nav>
+	</header>
+
+<!-- Banner -->
+	<section id="banner">
+
+					<!--
+						".inner" is set up as an inline-block so it automatically expands
+						in both directions to fit whatever's inside it. This means it won't
+						automatically wrap lines, so be sure to use line breaks where
+						appropriate (<br />).
+					-->
+					<div class="inner">
+
+						<header>
+							<h2>National <br/> Parks</h2>
+						</header>
+						<p>Please click on Activities <br /> in the top right corner <br /> to get started.</p>
+						<footer>
+							<ul class="buttons stacked">
+								<li>by Michelle Zhu</a></li>
+							</ul>
+						</footer>
+
+					</div>
+
+	</section>
+{% endblock %}

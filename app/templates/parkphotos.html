@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content %}
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">Twenty <span>by HTML5 UP</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="index.html">Welcome</a></li>
+							<li class="submenu">
+								<a href="#">Layouts</a>
+								<ul>
+									<li><a href="left-sidebar.html">Left Sidebar</a></li>
+									<li><a href="right-sidebar.html">Right Sidebar</a></li>
+									<li><a href="no-sidebar.html">No Sidebar</a></li>
+									<li><a href="contact.html">Contact</a></li>
+									<li class="submenu">
+										<a href="#">Submenu</a>
+										<ul>
+											<li><a href="#">Dolore Sed</a></li>
+											<li><a href="#">Consequat</a></li>
+											<li><a href="#">Lorem Magna</a></li>
+											<li><a href="#">Sed Magna</a></li>
+											<li><a href="#">Ipsum Nisl</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="#" class="button primary">Sign Up</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<!-- One -->
+						<section class="wrapper style4 container">
+
+							<div class="row gtr-150">
+								<div class="col-4 col-12-narrower">
+
+									<!-- Sidebar -->
+										<div class="sidebar">
+											{% for img in data['images'] %}
+											<section>
+												<header>
+													<h3>{{ img['title'] }}</h3>
+												</header>
+												<a href="#" class="image featured"><img src="{{ img['url'] }}" alt="" /></a>
+												<p>
+													{{ img['caption'] }} <br>
+													Credit: {{ img['credit'] }}
+												</p>
+											</section>
+											{% endfor %}
+										</div>
+
+								</div>
+								<div class="col-8 col-12-narrower imp-narrower">
+
+									<!-- Content -->
+										<div class="content">
+											<section>
+												<header>
+													<h2>{{ data['fullName'] }}</h2>
+												</header>
+													{% if data['url'] %}
+													<p><a href = "{{ data['url'] }}"><b>Link to park website</b></a></p>
+													{% endif %}
+													{% if data['address'] %}
+													<p><b>Address:</b> <br>
+														{{ data['address']['line1'] }} <br>
+														{% if data['address']['line2'] %}
+															{{ data['address']['line2'] }} <br>
+														{% endif %}
+														{% if data['address']['line3'] %}
+															{{ data['address']['line3'] }} <br>
+														{% endif %}
+														{{ data['address']['city'] }}, {{ data['address']['stateCode'] }}
+														{{ data['address']['postalCode'] }} <br>
+													</p>
+													{% endif %}
+													{% if data['directionsInfo'] %}
+													<p><b>Directions:</b> {{ data['directionsInfo'] }}</p>
+													{% endif %}
+													{% if data['hours'] %}
+													<p><b>Hours: </b><br>
+														Sunday: {{ data['hours']['sunday'] }} <br>
+														Monday: {{ data['hours']['monday'] }} <br>
+														Tuesday: {{ data['hours']['tuesday'] }} <br>
+														Wednesday: {{ data['hours']['wednesday'] }} <br>
+														Thursday: {{ data['hours']['thursday'] }} <br>
+														Friday: {{ data['hours']['friday'] }} <br>
+														Saturday: {{ data['hours']['saturday'] }} <br>
+													</p>
+													{% endif %}
+													{% if data['fees'][0]['cost'] == '0.00' %}
+													<p><b>Fees: </b> Free Park
+													</p>
+													{% else %}
+													<b>Fees: </b> 
+													{% for _fee in data['fees'] %}
+													<p>{{ _fee['title']}}: ${{ _fee['cost'] }} <br>
+														{{ _fee['description'] }}
+													</p>
+													{% endfor %}
+													{% endif %}
+													{% if data['phoneNumber'] %}
+													<p><b>Phone Number: </b>{{ data['phoneNumber']['phoneNumber'] }}</p>
+													{% endif %}
+
+										</section>
+										</div>
+
+								</div>
+							</div>
+						</section>
+
+				</article>
+
+{% endblock %}
