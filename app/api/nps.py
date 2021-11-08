@@ -1,4 +1,5 @@
 from flask import Blueprint, Request, Response, render_template, request, session
+from bs4 import BeautifulSoup
 import httpx
 import random
 
@@ -12,6 +13,15 @@ def get_data(entity, param = {}):
         resp = client.get(url = url, params = params)
         data = resp.json()
     return data
+
+def get_img(url):
+    img_url = ""
+    with httpx.Client() as client:
+        resp = client.get(url = url)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        img = soup.find('img', {'id':"webcamRefreshImage"})
+        img_url = img.get('src')
+    return img_url
 
 @parks_blueprint.route('/activities/')
 def get_activities():
@@ -69,5 +79,15 @@ def get_park_data(parkcode):
     park_details['fees'] = _data['entranceFees'] # dictionary
     park_details['hours'] = _data['operatingHours'][0]['standardHours'] # dictionary
     
+    _webcam = get_data('webcams', {'parkCode': parkcode})['data']
+    # return {'message': _webcam}
+    webcam_list = []
+    for webcam in _webcam:
+        webcam_details = {}
+        if not webcam["isStreaming"]:
+            webcam_details["title"] = webcam["title"]
+            webcam_details["url"] = get_img(webcam['url'])
+            webcam_list.append(webcam_details)
+    # return {'message': webcam_list}
     # return {'message': park_details}
-    return render_template('parkphotos.html', data = park_details)
+    return render_template('parkphotos.html', data = park_details, webcams = webcam_list)
