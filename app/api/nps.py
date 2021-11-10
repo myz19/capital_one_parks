@@ -1,13 +1,15 @@
 from flask import Blueprint, Request, Response, render_template, request, session
 from bs4 import BeautifulSoup
 import httpx
-import random
+import os
 
+# 5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu
 parks_blueprint = Blueprint('parks', __name__, url_prefix='/parks')
+os.environ['NPS_API_KEY'] = '5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu'
 
 def get_data(entity, param = {}):
     with httpx.Client() as client:
-        client.headers = {"X-Api-Key":"5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu"}
+        client.headers = {"X-Api-Key": os.getenv('NPS_API_KEY')}
         url = f'https://developer.nps.gov/api/v1/{entity}'
         params = param
         resp = client.get(url = url, params = params)
