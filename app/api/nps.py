@@ -5,7 +5,7 @@ import os
 
 # 5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu
 parks_blueprint = Blueprint('parks', __name__, url_prefix='/parks')
-os.environ['NPS_API_KEY'] = '5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu'
+# os.environ['NPS_API_KEY'] = '5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu'
 
 def get_data(entity, param = {}):
     with httpx.Client() as client:
