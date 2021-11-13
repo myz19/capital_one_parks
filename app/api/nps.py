@@ -1,11 +1,14 @@
 from flask import Blueprint, Request, Response, render_template, request, session
 from bs4 import BeautifulSoup
+from flask.helpers import url_for
 import httpx
 import os
 
+from werkzeug.utils import redirect
+
 # 5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu
 parks_blueprint = Blueprint('parks', __name__, url_prefix='/parks')
-# os.environ['NPS_API_KEY'] = '5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu'
+os.environ['NPS_API_KEY'] = '5n3ehepOD1fptaOs9Yd3vCydcC6hZL8EEByTfIEu'
 
 def get_data(entity, param = {}):
     with httpx.Client() as client:
@@ -24,6 +27,10 @@ def get_img(url):
         img = soup.find('img', {'id':"webcamRefreshImage"})
         img_url = img.get('src')
     return img_url
+
+@parks_blueprint.route('/')
+def index():
+    return redirect(url_for('parks.get_activities'))
 
 @parks_blueprint.route('/activities/')
 def get_activities():
